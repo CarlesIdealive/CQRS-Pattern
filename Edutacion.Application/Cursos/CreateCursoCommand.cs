@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using FluentValidation;
-using AutoMapper;
 using Education.Domain;
 using Education.Persistence;
 
@@ -45,9 +44,7 @@ public class CreateCursoCommand
             _context = context;
         }
 
-
-
-        async Task IRequestHandler<CreateCursoCommandRequest>.Handle(CreateCursoCommandRequest request, CancellationToken cancellationToken)
+        public async Task Handle(CreateCursoCommandRequest request, CancellationToken cancellationToken)
         {
             var curso = new Curso
             {
@@ -65,6 +62,14 @@ public class CreateCursoCommand
             {
                 throw new Exception("No se pudo crear el curso");
             }
+
+            ////Ahora lo busca en la base de datos para verificar que se creo
+            //var cursoCreado = await _context.Cursos.FindAsync(curso.CursoId);
+            //if (cursoCreado == null)
+            //{
+            //    throw new Exception("No se pudo encontrar el curso creado");
+            //}
+
             return;
         }
 
